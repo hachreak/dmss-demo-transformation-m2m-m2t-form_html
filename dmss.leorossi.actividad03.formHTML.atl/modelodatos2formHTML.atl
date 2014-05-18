@@ -1,0 +1,127 @@
+-- @nsURI ModeloDatos=http://mm_modelodatos/1.0
+-- @nsURI HtmlForm=http://htmlformmm/1.0
+
+-- /**
+--  * Copyright (C) 2014 Leonardo Rossi <leonardo.rossi@studenti.unipr.it>
+--  *
+--  * This source code is free software; you can redistribute it and/or modify
+--  * it under the terms of the GNU General Public License as published by
+--  * the Free Software Foundation; either version 2 of the License, or
+--  * (at your option) any later version.
+--  *
+--  * This source code is distributed in the hope that it will be useful,
+--  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+--  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+--  * GNU General Public License for more details.
+--  *
+--  * You should have received a copy of the GNU General Public License
+--  * along with this source code; if not, write to the Free Software
+--  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+--  *
+--  */
+
+module modelodatos2formularioHTML;
+create OUT : HtmlForm from IN : ModeloDatos;
+
+helper context ModeloDatos!Entity def: getStringAttrValue(type: String): String =
+	self.attributes->select(a | a.type = type)->collect(a | a.name)->first();
+
+helper context ModeloDatos!Entity def: getBoolAttrValue(type: String): Boolean =
+	self.attributes->select(a | a.type = type)->collect(a | a.name)->first() = 'true';
+
+helper context ModeloDatos!Entity def: isTypeOf(type: String): String =
+	self.getStringAttrValue('type') = type;
+	
+rule ModeloDatos2Form{
+	from m: ModeloDatos!ModeloDatos
+	to   f: HtmlForm!Form(
+		name <- m.name,
+		action <- m.entities->select(e | e.isTypeOf('form'))->first().getStringAttrValue('action'),
+		method <- m.entities->select(e | e.isTypeOf('form'))->first().getStringAttrValue('method'),
+		enctype <- m.entities->select(e | e.isTypeOf('form'))->first().getStringAttrValue('enctype'),
+		elements <- m.entities->select(e | not e.isTypeOf('option'))
+	)
+}
+
+rule Entity2InputText{
+	from e: ModeloDatos!Entity(e.isTypeOf('text'))
+	to  it: HtmlForm!InputText(
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		value <- e.getStringAttrValue('value')
+	)
+}
+
+rule Entity2Password{
+	from e: ModeloDatos!Entity(e.isTypeOf('password'))
+	to  it: HtmlForm!Password(
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		value <- e.getStringAttrValue('value')
+	)
+}
+
+rule Entity2Button{
+	from e: ModeloDatos!Entity(e.isTypeOf('button'))
+	to  it: HtmlForm!Button(
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly')
+	)
+}
+
+rule Entity2Radiobutton{
+	from e: ModeloDatos!Entity(e.isTypeOf('radio'))
+	to  it: HtmlForm!Radiobutton(
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		value <- e.getStringAttrValue('value'),
+		checked <- e.getBoolAttrValue('checked')
+	)
+}
+
+rule Entity2Checkbox{
+	from e: ModeloDatos!Entity(e.isTypeOf('checkbox'))
+	to  it: HtmlForm!Checkbox(
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		value <- e.getStringAttrValue('value'),
+		checked <- e.getBoolAttrValue('checked')
+	)
+}
+
+rule Entity2Textarea{
+	from e: ModeloDatos!Entity(e.isTypeOf('textarea'))
+	to  ta: HtmlForm!Textarea(		
+		label <- e.getStringAttrValue('label'),
+		name <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		value <- e.getStringAttrValue('value'),
+		cols <- e.getStringAttrValue('cols').toInteger(),
+		rows <- e.getStringAttrValue('rows').toInteger()
+	)
+}
+
+rule Entity2Select{
+	from e: ModeloDatos!Entity(e.isTypeOf('select'))
+	to   s: HtmlForm!Select(
+		label <- e.getStringAttrValue('label'),
+		name  <- e.name,
+		readonly <- e.getBoolAttrValue('readonly'),
+		multiple <- e.getBoolAttrValue('multiple'),
+		options <- ModeloDatos!Entity.allInstances()->select(entity | entity.isTypeOf('option'))->select(entity | entity.getStringAttrValue('select') = e.name)
+	)
+}
+
+rule Entity2Option{
+	from e: ModeloDatos!Entity(e.isTypeOf('option'))
+	to   o: HtmlForm!Option(
+	     	label <- e.getStringAttrValue('label'),
+			selected <- e.getBoolAttrValue('selected'),
+			value <- e.getStringAttrValue('value')
+	)
+}

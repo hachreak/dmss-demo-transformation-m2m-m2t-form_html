@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>testForm</title>
+</head>
+<body>
+  <h3>testForm</h3>
+  <form enctype="multipart/form-data" class="form-testForm" id="form" method="post" name="testForm" action="/contact.php">
+    testLabelText <input type="text" class="form-demoText" value="default value..." name="demoText" readonly >
+    <br>
+    testLabelPassword <input type="password" class="form-demoPassword" value="default password value..." name="demoPassword" readonly >
+    <br>
+    test Radio  1 <input type="radio" class="form-demoRadiobutton" value="default radio1 value..." name="demoRadiobutton" disabled  >
+    <br>
+    test Radio  2 <input type="radio" class="form-demoRadiobutton" value="default radio2 value..." name="demoRadiobutton"   >
+    <br>
+    test Radio  3 <input type="radio" class="form-demoRadiobutton" value="default radio3 value..." name="demoRadiobutton"  checked >
+    <br>
+    test Checkbox  1 <input type="checkbox" class="form-demoCheckbox" value="default checkbox1 value..." name="demoCheckbox"  checked >
+    <br>
+    test Checkbox  2 <input type="checkbox" class="form-demoCheckbox" value="default checkbox2 value..." name="demoCheckbox"   >
+    <br>
+    test Checkbox  3 <input type="checkbox" class="form-demoCheckbox" value="default checkbox3 value..." name="demoCheckbox" disabled  >
+    <br>
+    Description <br>
+      <textarea type="text" class="form-description" name="description"  ></textarea>
+    <br>
+    testSelectText 
+      <select name="demoSelect" >
+        <option value="value1"  >testOption1</option>
+        <br>
+        <option value="value2"  selected="selected">testOption2</option>
+        <br>
+        <option value="value3"  >testOption3</option>
+        <br>
+        
+      </select>
+    <br>
+    <input type="submit" class="form-demoButton" value="testLabelButton" name="demoButton" readonly >
+    <br>
+    
+  </form>
+</body>
+</html>

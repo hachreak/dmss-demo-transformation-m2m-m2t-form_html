@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<htmlformmm:Form xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:htmlformmm="http://htmlformmm/1.0" name="testForm" action="/contact.php" method="post" enctype="multipart/form-data">
+  <elements xsi:type="htmlformmm:InputText" name="demoText" label="testLabelText" readonly="true" value="default value..."/>
+  <elements xsi:type="htmlformmm:Password" name="demoPassword" label="testLabelPassword" readonly="true" value="default password value..."/>
+  <elements xsi:type="htmlformmm:Radiobutton" name="demoRadiobutton" label="test Radio  1" readonly="true" value="default radio1 value..."/>
+  <elements xsi:type="htmlformmm:Radiobutton" name="demoRadiobutton" label="test Radio  2" value="default radio2 value..."/>
+  <elements xsi:type="htmlformmm:Radiobutton" name="demoRadiobutton" label="test Radio  3" value="default radio3 value..." checked="true"/>
+  <elements xsi:type="htmlformmm:Checkbox" name="demoCheckbox" label="test Checkbox  1" value="default checkbox1 value..." checked="true"/>
+  <elements xsi:type="htmlformmm:Checkbox" name="demoCheckbox" label="test Checkbox  2" value="default checkbox2 value..."/>
+  <elements xsi:type="htmlformmm:Checkbox" name="demoCheckbox" label="test Checkbox  3" readonly="true" value="default checkbox3 value..."/>
+  <elements xsi:type="htmlformmm:Textarea" name="description" label="Description" cols="4" rows="3"/>
+  <elements xsi:type="htmlformmm:Select" name="demoSelect" label="testSelectText">
+    <options label="testOption1" value="value1"/>
+    <options selected="true" label="testOption2" value="value2"/>
+    <options label="testOption3" value="value3"/>
+  </elements>
+  <elements xsi:type="htmlformmm:Button" name="demoButton" label="testLabelButton" readonly="true"/>
+</htmlformmm:Form>
